@@ -9,7 +9,7 @@ from molecular_integrals_s import molecular_integrals_s
 from HF import HF
 from HF import MP2
 from DFT import DFT
-
+#Currently not working cause diis was added to DFT
 
 alphas= [ [[0.8021420155E+01,0.1467821061E+01,0.4077767635E+00,0.1353374420E+00]],
           [[0.8021420155E+01,0.1467821061E+01,0.4077767635E+00,0.1353374420E+00]]  ]
