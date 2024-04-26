@@ -1,0 +1,18 @@
+Hydrogen molecule in STO-3G basis
+
+Orbital energies:
+-0.581,  0.669
+
+HF energy: -1.123106478474166
+
+HF-MP2 energy: -1.1362776273959676
+
+KS-DFT within LDA 
+
+DFT-MP2 energy: -1.1247024319875911
+
+DFT-WVN3 unpolarized energy: -1.2896355431625617
+
+DFT-WVN3 polarized energy: -1.2041477664662406
+
+DFT-PZ energy: -1.121802694479296
