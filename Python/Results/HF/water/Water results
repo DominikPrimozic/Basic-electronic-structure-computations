@@ -1,1 +1,19 @@
 In STO3G
+
+Orbital energies:
+-20.242,  -1.268,  -0.617,  -0.453,  -0.391,   0.605,   0.741
+
+
+HF energy: -74.96306315314258
+
+HF-MP2 energy: -74.99862998972682
+
+DFT in LDA:
+
+DFT-MP2 energy: -74.71352854738633
+
+DFT-WVN3 unpolarized energy: -75.7608496498805
+
+DFT-WVN3 polarized energy: -75.14764647389829
+
+DFT-PZ energy: -74.71536711004825
