@@ -10,7 +10,7 @@
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-/*
+
 double factorial(int n) {
     if (n <= 1)
         return 1;
@@ -47,15 +47,15 @@ Molecule molecule;
 public:
     MolecularIntegralsS(std::vector<std::vector<std::vector<double>>> alphas, std::vector<std::vector<double>> centers, std::vector<std::vector<std::vector<int>>> l, std::vector<int> Z, std::vector<std::vector<std::vector<double>>> coefficients) 
         : molecule(alphas, centers, l, Z, coefficients) {   
-        // Initialize molecule
+       
         //Molecule molecule(alphas, centers,l, Z, coefficients);
-        // Calculate integrals
-        //overlap_matrix();
-        //kinetic_matrix();
-        //electron_nuclear_matrix();
-        //electron_electron_repulsion_matrix();
-        //nuclear_nuclear_repulsion();
-        //H_core = T + V_ne; //need to reshape H_core i think
+        
+        overlap_matrix();
+        kinetic_matrix();
+        electron_nuclear_matrix();
+        electron_electron_repulsion_matrix();
+        nuclear_nuclear_repulsion();
+        H_core = T + V_ne; 
     }
 
     void overlap_matrix() {
@@ -138,7 +138,7 @@ void electron_nuclear_matrix() {
                         
                         
                         std::vector<double> Ra = molecule.position[atom];
-                        //std::cout << Ra[0]<<Ra[1]<<Ra[2] << std::endl;
+                       
                         double factor = -molecule.charges[atom] * 2 * std::sqrt((ap + aq) / M_PI);
                         std::vector<double> Rapq(3);
                         for (int iii=0;iii<3 ;++iii)
@@ -219,14 +219,14 @@ void electron_electron_repulsion_matrix() {
         double E_nn = 0.0;
         for (size_t atom1 = 0; atom1 < molecule.position.size(); ++atom1) {
         for (size_t atom2 = atom1 + 1; atom2 < molecule.position.size(); ++atom2) {
-            // Compute the difference vector between atom1 and atom2
+            
             Eigen::VectorXd diff = Eigen::Map<const Eigen::VectorXd>(molecule.position[atom1].data(), molecule.position[atom1].size()) -
                                    Eigen::Map<const Eigen::VectorXd>(molecule.position[atom2].data(), molecule.position[atom2].size());
 
-            // Compute the distance between atom1 and atom2
+          
             double dist = diff.norm();
 
-            // Add the contribution to the nuclear-nuclear repulsion energy
+            
             E_nn += molecule.charges[atom1] * molecule.charges[atom2] / dist;
         }
     }
@@ -240,22 +240,8 @@ int main(){
       std::vector<int> Z={1,1};
        std::vector<std::vector<std::vector<double>>> coefficients={{{0.5675242080E-01,0.2601413550E+00,0.5328461143E+00,0.2916254405E+00}},{{0.5675242080E-01,0.2601413550E+00,0.5328461143E+00,0.2916254405E+00}}};
           
-    //Molecule molecule(alphas, centers,l, Z, coefficients);
-    
-    //std::cout << molecule.mol[0][0].a<< std::endl;
-    //std::cout << molecule.charges[0]<< std::endl;
-    //std::cout << molecule.charges[1]<< std::endl;
-    //std::cout << molecule.position[1][2]<< std::endl;
+    Molecule molecule(alphas, centers,l, Z, coefficients);
     MolecularIntegralsS molS(alphas,centers,l,Z,coefficients);
-    //std::cout << molS.molecule.mol[0][1].N<< std::endl;
-    //std::cout << molS.molecule.mol[0][0].l[1]<< std::endl;
-    molS.overlap_matrix();
-    molS.kinetic_matrix();
-    molS.electron_nuclear_matrix();
-    molS.electron_electron_repulsion_matrix();
-    molS.nuclear_nuclear_repulsion();
-    //std::cout << boys(5,0) << std::endl;
     std::cout << molS.E_nn << std::endl;
     return 0;
 }
-*/
