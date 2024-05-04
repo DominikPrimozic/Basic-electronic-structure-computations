@@ -47,7 +47,7 @@ public:
     void fock_matrix(MolecularIntegralsS molint) {
         F=molint.H_core;
         auto dim =molint.V_ee.dimensions();
-        //Drv V_eepqrv
+        
         for (int p=0;p<dim[0];++p){
             for (int q=0;q<dim[1];++q){
                 for (int r=0;r<D.rows();++r){
@@ -98,37 +98,25 @@ public:
     }
 
     void SCF(MolecularIntegralsS molint, double convergence, int max_steps) {
-        // Initial guess
+        
         Eigen::GeneralizedSelfAdjointEigenSolver<Eigen::MatrixXd> es(molint.H_core,molint.S);
         C=es.eigenvectors();
-        //std::cout << C << std::endl;
+        
         density_matrix(molint);
-        //std::cout << "\n" << std::endl;
-        //std::cout << "D"<<D << std::endl;    
+       
         double E0 = compute_electronic_energy(D, molint.H_core, molint.H_core);
         double E;
-        //diis ds;
+        
         for (int step = 0; step < max_steps; ++step) 
         {
             fock_matrix(molint);
             orbital_coefficients(molint);
             density_matrix(molint);
-            //ds.update(F,D,molint.S);
-            //std::cout << "ds made" << std::endl;
-            //if (step>1){
-            //    this->F=ds.DIIS_F();
-            //    std::cout << "Fmade?" << std::endl;
-            //}
-            //std::cout <<"\nC"<< C << std::endl;
-            //std::cout <<"\nD"<< D << std::endl;
-            //std::cout <<"\nF"<< F << std::endl;
-            //std::cout << "energy?" << std::endl;
+            
             E = compute_electronic_energy(D, molint.H_core, F);
 
             std::cout << E << std::endl;
-            //double rd=ds.RMSD_check();
-            //std::cout << rd << std::endl;
-
+            
             if (abs(E - E0) < convergence) {
                 std::cout << "Converged\n";
                 E_ee = E;
@@ -196,20 +184,7 @@ int main(){
     };
     /**/
     MolecularIntegralsS molS(alphas, centers,l, Z, coefficients);
-    /*
-    std::cout<< std::setprecision(5) << molS.S << std::endl;
-    std::cout << "\n" << std::endl;
-    std::cout << molS.T << std::endl;
-    std::cout << "\n" << std::endl;
-    std::cout<< std::setprecision(5) << molS.V_ne << std::endl;
-    std::cout << "\n" << std::endl;
-    std::cout<< std::setprecision(5) << molS.E_nn << std::endl;
-    std::cout << "\n" << std::endl;
-    std::cout <<std::setprecision(17) << molS.V_ee.sum() << std::endl;
-    std::cout << "\n" << std::endl;
-    return 0;
-    */
-   //oscillates, need DIIS
+    
    HF hartreefock(molS,1e-10,200);
    std::cout<<std::setprecision(17) << hartreefock.E_total << std::endl;
 }
