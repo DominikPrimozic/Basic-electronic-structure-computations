@@ -26,7 +26,7 @@ double boys(double x, int n) {
     }
 }
 double npdot(std::vector<double> R1,std::vector<double> R2){
-    //std::cout<<R1.size()<<std::endl;
+    
     double Rdot=0;
     for (int i=0;i<R1.size();++i){
         Rdot+=R1[i]*R2[i];
@@ -36,7 +36,7 @@ double npdot(std::vector<double> R1,std::vector<double> R2){
 
 std::vector<double> vector_diff(std::vector<double> R1,std::vector<double> R2){
     std::vector<double> R(R1.size());
-    //std::cout<<R1.size()<<std::endl;
+    
     for (int i=0;i<R1.size();++i){
         R[i]=R1[i]-R2[i];
     }
@@ -81,7 +81,7 @@ double overlap(Gaussian gi, Gaussian gj) {
         P[i]=(ai*A[i]+aj*B[i])/(ai+aj);
     }
     double p =ai+aj;
-    //std::cout<<Norm<<std::endl;
+    
     return Eab*Norm*compute_s(A[0],B[0],P[0],p,l1[0],l2[0])*compute_s(A[1],B[1],P[1],p,l1[1],l2[1])*compute_s(A[2],B[2],P[2],p,l1[2],l2[2]);
 }
 
@@ -130,7 +130,7 @@ double kinetic(Gaussian gi, Gaussian gj) {
                           compute_s(A[0],B[0],P[0],p,l1[0],l2[0]) * compute_s(A[1],B[1],P[1],p,l1[1],l2[1])  * compute_k(A[2],B[2],P[2],a,b,l1[2],l2[2]) );   
 }
 
-//for s its cool, not yet checked for more
+
 std::vector<int> low(std::vector<int>& l,int crd, int size){
     std::vector<int> llow=l;
     llow[crd]+=size;
@@ -187,7 +187,7 @@ double nuclearVRR(double& a,double& b,std::vector<double> A,std::vector<double> 
     {
         P[i]=(a*A[i]+b*B[i])/(a+b);
     }
-    //std::cout<<P[0]<< " "<<P[1]<<" "<<P[2] <<std::endl;
+   
 
     if (check_zero(la)==true){
         return nuclear00(a,b,A,B,R,n);
@@ -197,10 +197,10 @@ double nuclearVRR(double& a,double& b,std::vector<double> A,std::vector<double> 
         return 0;
     }
     int crd=find_crd(la);
-    //int np1=n+1; //but cant in previous one ??
+    
     double nu=vector_diff(P,A)[crd] * nuclearVRR(a, b, A, B,R,low(la,crd,-1), n) - vector_diff(P,R)[crd]*nuclearVRR(a, b, A, B,R,low(la,crd,-1), n+1);
     
-    //int lowered=la[crd]-1;
+    
     if (la[crd]-1>0){
         nu+= (la[crd]-1)/(2*p) * ( nuclearVRR(a, b, A, B,R,low(la,crd,-2), n) -  nuclearVRR(a, b, A, B,R,low(la,crd,-2), n+1) );
     }
@@ -219,13 +219,7 @@ double contractNU(std::vector<Gaussian> cGTO1,std::vector<Gaussian> cGTO2,std::v
             double b = cGTO2[q].a;
             std::vector<double> A = cGTO1[p].r;
             std::vector<double> B = cGTO2[q].r;
-            /*
-            std::cout<<a<<std::endl;
-            std::cout<<b<<std::endl;
-            std::cout<<A[0]<<A[1]<<A[2]<<std::endl;
-            std::cout<<B[0]<<B[1]<<B[2]<<std::endl;
-            std::cout<<R[0]<<R[1]<<R[2]<<std::endl;
-            */
+            
             contracted_VRR+=(cGTO1[p].N*cGTO2[q].N)*(cGTO1[p].c*cGTO2[q].c) * nuclearVRR(a, b, A, B, R, la, n);
         }
     }
