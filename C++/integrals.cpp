@@ -18,15 +18,15 @@
 
 MolecularIntegralsS::MolecularIntegralsS(std::vector<std::vector<std::vector<double>>> alphas, std::vector<std::vector<double>> centers, std::vector<std::vector<std::vector<int>>> l, std::vector<int> Z, std::vector<std::vector<std::vector<double>>> coefficients) 
         : molecule(alphas, centers, l, Z, coefficients) {   
-        // Initialize molecule
+        
         //Molecule molecule(alphas, centers,l, Z, coefficients);
-        // Calculate integrals
+       
         overlap_matrix();
         kinetic_matrix();
         electron_nuclear_matrix();
         electron_electron_repulsion_matrix();
         nuclear_nuclear_repulsion();
-        H_core = T + V_ne; //need to reshape H_core i think
+        H_core = T + V_ne; 
     }
 
 void MolecularIntegralsS:: overlap_matrix() {
@@ -119,14 +119,14 @@ void MolecularIntegralsS:: nuclear_nuclear_repulsion() {
     double E_nn = 0.0;
     for (size_t atom1 = 0; atom1 < molecule.position.size(); ++atom1) {
     for (size_t atom2 = atom1 + 1; atom2 < molecule.position.size(); ++atom2) {
-        // Compute the difference vector between atom1 and atom2
+       
         Eigen::VectorXd diff = Eigen::Map<const Eigen::VectorXd>(molecule.position[atom1].data(), molecule.position[atom1].size()) -
                                 Eigen::Map<const Eigen::VectorXd>(molecule.position[atom2].data(), molecule.position[atom2].size());
 
-        // Compute the distance between atom1 and atom2
+        
         double dist = diff.norm();
 
-        // Add the contribution to the nuclear-nuclear repulsion energy
+        
         E_nn += molecule.charges[atom1] * molecule.charges[atom2] / dist;
     }
 }
