@@ -16,7 +16,7 @@ using namespace std;
 
 
 typedef Triplet<double> T;
-/* //so that i can run other mains
+
 SparseMatrix<double> laplacian(Vector3i n_points, Vector3d dr) {
     int nx = n_points(0), ny = n_points(1), nz = n_points(2);
     double dx = dr(0), dy = dr(1), dz = dr(2);
@@ -53,9 +53,7 @@ SparseMatrix<double> laplacian(Vector3i n_points, Vector3d dr) {
     SparseMatrix<double> Iyz(nz*ny, nz*ny);
     Iyz.setIdentity();
     SparseMatrix<double> Laplacian = kroneckerProduct(Lx, Iyz) + kroneckerProduct(Ix, Lap1) ;
-    //cout << Laplacian.coeff(650,650) << endl; 
-    //cout << Laplacian.coeff(650,649) << endl;
-    //cout << Laplacian.coeff(1,2) << endl;
+
     return Laplacian;
 }
 
@@ -80,10 +78,7 @@ SparseMatrix<double> nuclear_potential(Vector3d centers, VectorXd charge, Vector
                     if (dist==0) {dist=1e-100;}
                     v_ne.coeffRef(c, c) -= zval / dist;
                     ++c;
-                        //cout << x(j)<<"x" << endl;
-                        //cout << y(i)<< "y" << endl;
-                        //cout << z(k)<<"z" << endl;
-                    //cout << dist << endl; //one too many 
+                        
                 }
             } 
             
@@ -110,7 +105,7 @@ pair<SparseMatrix<double>, double> hartree_potential(Vector3i n_points, SparseMa
     cg.compute(Laplacian);
     VectorXd right=-4*3.14*density;
     VectorXd vh = cg.solve(right);
-    //cout << "#iterations:     " << cg.iterations() << endl;
+   
     SparseMatrix<double> vh_diag(npoints, npoints);
     vh_diag.reserve(VectorXi::Constant(npoints, 1));
     for (int i = 0; i < npoints; ++i) {
@@ -128,7 +123,7 @@ double kinetic_energy(SparseMatrix<double>& T, MatrixXd& psi, int nelect, double
     double eT = 0;
     
     MatrixXd temp = psi.transpose()*(T * psi) * dV*nelect;
-    //cout << temp <<endl;
+    
     eT=temp(0,0);
     
     return eT;
@@ -156,8 +151,7 @@ pair<SparseMatrix<double>, double> ex_co(VectorXd& density, Vector3i n_points, d
 MatrixXd normalize(MatrixXd& psiM, double dV) {
     int nrows = psiM.rows(), ncols = psiM.cols();
     MatrixXd psi(nrows, ncols);
-    //cout << psi.rows()  <<endl;
-    //cout << psi.cols()  <<endl;
+    
     for (int i = 0; i < ncols; ++i) {
         psi.col(i) = psiM.col(i) / sqrt(dV);
     }
@@ -186,8 +180,7 @@ int main() {
     
     Vector3d centers(0., 0., 0.);
     Vector2d corners{-5,5};
-    //cout << corners  <<endl;
-    //cout << centers  <<endl;
+  
     VectorXd px = VectorXd::LinSpaced(dense[0], corners[0], corners[1]);
     VectorXd py = VectorXd::LinSpaced(dense[1], corners[0], corners[1]);
     VectorXd pz = VectorXd::LinSpaced(dense[2], corners[0], corners[1]);
@@ -202,14 +195,14 @@ int main() {
     grid[0] = px;
     grid[1] = py;
     grid[2] = pz;
-    //good till here
+    
     SparseMatrix<double> Laplacian = laplacian(dense, dr);
-    //cout << Laplacian.diagonal()  <<endl; //not right
+   
     
     SparseMatrix<double> T = kinetic_matrix(Laplacian);
-    //cout << "two"  <<endl;
+   
     SparseMatrix<double> V = nuclear_potential(centers, charge, dense, grid);
-    //cout << V.diagonal()   <<endl;
+    
     SparseMatrix<double> H = T + V;
 
     int counter = 0;
@@ -220,29 +213,29 @@ int main() {
     
     while (ediff > etol) {
         Spectra::SparseGenMatProd<double> op(H);
-       //H is right
+       
         Spectra::GenEigsSolver<Spectra::SparseGenMatProd<double>> eigs(op, 1, 20);
         eigs.init();
         int nconv = eigs.compute(Spectra::SortRule::SmallestReal);
-        //doesnt converge
-        //cout <<eigs.eigenvalues()<< endl;
+       
+        
         VectorXcd Eim=eigs.eigenvalues();
         MatrixXcd psiMim = eigs.eigenvectors();
-        //cout <<"eigen "<< Eim << endl;
+    
         VectorXd E = Eim.real();
         MatrixXd psiM = psiMim.real();
-        //cout <<"eigen "<< E << endl;
+        
         
         counter++;
         MatrixXd psi = normalize(psiM, dV);
-        //cout << psi(1,0)*psi(1,0) << endl;
+       
         double tota=0;
         for (int i=0; i<psi.rows();++i){
             tota+=psi(i,0)*psi(i,0)*dV;
         }
-        //cout << tota << endl;
+       
         VectorXd rho = get_density(psi, nelect);
-        //cout << "we have rho" << endl;
+        
  
         
         
@@ -250,19 +243,18 @@ int main() {
         cout << "at least hartree works" << endl;
         SparseMatrix<double> vh = hartree.first;
         double eh = hartree.second;
-        //cout << eh << endl;
-        //good for now
+      
+       
         
         pair<SparseMatrix<double>, double> exchange_correlation = ex_co(rho, dense,dV);
         SparseMatrix<double> vxc = exchange_correlation.first;
         double exc = exchange_correlation.second;
-        //cout << exc << endl;
+        
         
         
         double eT = kinetic_energy(T, psi, nelect,dV);
         double eV = nuclear_energy(V, rho, dV);
-       // cout << eT << endl;
-        //cout << eV<< endl;
+       
         
         double E_total = eT + eV + eh+exc;
         cout << E_total<< endl;
@@ -272,12 +264,7 @@ int main() {
 
         
         H = T + V + vh + vxc ;
-        //cout << H.coeff(650,650) << endl; 
-        //cout << H.coeff(0,0) << endl;
-        //cout << H.coeff(1,2) << endl;
-        //cout << H.coeff(7999,7999) << endl;
-        //cout << H.coeff(1000,1020) << endl;
-        //cout << H.coeff(4000,4000) << endl;
+
         
         if (counter == 20) {
             cout << "Did not converge" << endl;
@@ -291,5 +278,3 @@ int main() {
     
     return 0;
 }
-//lets say it works
-*/
