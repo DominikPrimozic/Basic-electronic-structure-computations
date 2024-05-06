@@ -52,7 +52,7 @@ void MolecularIntegralsS:: overlap_matrix() {
 void MolecularIntegralsS::kinetic_matrix() {
     int n_mol_basis = molecule.mol.size();
     T.resize(n_mol_basis, n_mol_basis);
-
+    T.setZero();
     for (int i = 0; i < n_mol_basis; ++i) {
         for (int j = 0; j < n_mol_basis; ++j) {
             int n_exp_basis_i = molecule.mol[i].size();
@@ -71,6 +71,7 @@ void MolecularIntegralsS::electron_nuclear_matrix() {
     int n_mol_basis = molecule.mol.size();
     int n_atoms = molecule.charges.size();
     V_ne.resize(n_mol_basis, n_mol_basis);
+    V_ne.setZero();
 
     for (int atom = 0; atom < n_atoms; ++atom) {
         for (int i = 0; i < n_mol_basis; ++i) {
