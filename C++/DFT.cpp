@@ -164,11 +164,11 @@ void SCF(std::tuple<double, double, int> scf_param,MolecularIntegralsS molint,st
     for (int step = 0; step < max_steps; ++step) 
     {
         Eigen::MatrixXd   J=get_J(D,molint.V_ee);
-        //std::cout << J << std::endl;
+        
         Eigen::VectorXd rho=evaluate_density();
         double norm=0;
         for (int i=0;i<rho.size();++i){norm+=rho[i]*weights[i];}
-        //std::cout << "normalization "<< norm << std::endl;
+       
         Eigen::VectorXd vxc=Vexchange_LDA(rho) + Vcorrelation_LDA(wigner_seitz_r(rho));
         Eigen::VectorXd exc=Eexchange_LDA(rho) + Ecorrelation_LDA(wigner_seitz_r(rho));
 
@@ -179,7 +179,7 @@ void SCF(std::tuple<double, double, int> scf_param,MolecularIntegralsS molint,st
             fKS=ds.DIIS_F();
         
         }
-        //std::cout << fKS << std::endl;
+        
         Eigen::GeneralizedSelfAdjointEigenSolver<Eigen::MatrixXd> es(fKS,molint.S);
         C=es.eigenvectors();
         density_matrix();
@@ -192,9 +192,9 @@ void SCF(std::tuple<double, double, int> scf_param,MolecularIntegralsS molint,st
         }
         Eks+=xc_energy(exc);
 
-        //std::cout << Eks << std::endl;
+        
         double rd=ds.RMSD_check();
-        //std::cout << rd << std::endl;
+       
 
         if ((abs(Eks - E0) < convergence) && (rd<diss_c)) {
             std::cout << "Converged\n";
@@ -268,7 +268,7 @@ int main(){
     DFT dftmol(molS,scf_param);
 
    
-    //std::cout << dftmol.ao << std::endl;
+    
      std::cout <<std::setprecision(17)<< dftmol.E_total << std::endl;
     
 
