@@ -1,16 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Apr 19 16:11:00 2024
 
-@author: domin
-"""
-
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Apr 17 16:13:53 2024
-
-@author: domin
-"""
 #for c++
 
 import numpy as np
