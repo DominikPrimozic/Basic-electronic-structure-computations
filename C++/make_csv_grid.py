@@ -28,7 +28,7 @@ else: raise ValueError
 
 mole=molecule(charge,centers)
 
-grid,w=GRID(mole)
+grid,w=GRID(mole, ty=2)
 
 np.save("grid_x",grid[:,0])
 np.save("grid_y",grid[:,1])
