@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun May  5 12:43:20 2024
 
-@author: domin
-"""
 import numpy as np
 from grid2 import GRID
 
