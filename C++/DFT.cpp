@@ -215,6 +215,13 @@ void total_energy(MolecularIntegralsS molint){
 
 int main(){
     /*
+    std::vector<std::vector<std::vector<double>>> alphas = {{ {38.474970}, {5.782948}, {1.242567}, {0.298073} }};
+    std::vector<std::vector<double>> centers = {{0,0,0}};
+    std::vector<std::vector<std::vector<int>>> l={{{0,0,0},{0,0,0},{0,0,0},{0,0,0}}};
+    std::vector<int> Z={2};
+    std::vector<std::vector<std::vector<double>>> coefficients= {{ {1}, {1}, {1}, {1} }};
+    */
+    /*
     std::vector<std::vector<std::vector<double>>> alphas={{{0.8021420155E+01,0.1467821061E+01,0.4077767635E+00,0.1353374420E+00}},{{0.8021420155E+01,0.1467821061E+01,0.4077767635E+00,0.1353374420E+00}}};
     std::vector<std::vector<double>> centers = {{0,0,0},{0,0,1.4}};
     std::vector<std::vector<std::vector<int>>> l= {{{0, 0, 0}}, {{0, 0, 0}}};
