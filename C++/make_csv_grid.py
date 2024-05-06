@@ -5,8 +5,8 @@ Created on Sun May  5 12:43:20 2024
 @author: domin
 """
 import numpy as np
-from grid import GRID
-#will be grid 2 after
+from grid2 import GRID
+
 
 class molecule():
     def __init__(self,charge,position):
