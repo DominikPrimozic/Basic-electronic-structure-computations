@@ -8,7 +8,7 @@
 #include <exco.h>
 #include <grid.h>
 
-
+//for this to work you do need to run python script to generate the grid in mpy files that are then read by grid.cpp
 
 
  Eigen::VectorXd gaussian_grid_eval(Gaussian gaussian,std::vector<double> gridx,std::vector<double> gridy,std::vector<double> gridz){
