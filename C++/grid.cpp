@@ -9,8 +9,7 @@
 
 std::tuple<std::vector<double>, std::vector<double>,std::vector<double>,std::vector<double>> load_grid()
 {
-    // Note: you need to supply the data type you are loading
-    //       in this case "double".
+    //once i figure out how to translate lebedev generator to c++ this will bu fully c++ method
     auto data = xt::load_npy<double>("grid_x.npy");
     std::vector<double> x_grid(data.begin(), data.end());
 
