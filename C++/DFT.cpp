@@ -67,13 +67,13 @@ public:
 public:
     DFT(MolecularIntegralsS molint, std::tuple<double, double, int> scf_param, std::string functional = "MP", int limit = 0) {
         n_occ = molint.molecule.n_occ;
-        get_grid();
+        get_grid(molint);
         grid_atomic_orbitals(molint.molecule.mol, gridx, gridy, gridz);
         SCF(scf_param,molint,functional,limit);
         total_energy(molint);
     }
-void get_grid(){
-    auto tup=load_grid();
+void get_grid(MolecularIntegralsS molint){
+    auto tup=grid_maker(molint.molecule, 1);
     gridx=std::get<0>(tup);
     gridy=std::get<1>(tup);
     gridz=std::get<2>(tup);
