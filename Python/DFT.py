@@ -29,7 +29,7 @@ class DFT():#molecule is actually integrals
     
     def get_grid(self,molecule,gty):
         from grid2 import GRID 
-        #there is also a grid2 script in which you can set coarse or close grid
+        
         self.grid,self.weights=GRID(molecule,gty)
     
     def grid_atomic_orbitals(self,basis,grid_point):
