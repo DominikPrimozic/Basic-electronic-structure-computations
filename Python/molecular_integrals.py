@@ -101,7 +101,7 @@ class molecular_integrals(molecule):
                             gto2=self.mol[j]
                             gto3=self.mol[k]
                             gto4=self.mol[l]
-                            #assuming pure orbitals
+                            
                             #print(HRR(gto1,gto2,gto3,gto4))
                             la,lb,lc,ld= gto1[0].l,  gto2[0].l,  gto3[0].l,  gto4[0].l
                             value=HRR(gto1,gto2,gto3,gto4, la,lb,lc,ld) 
